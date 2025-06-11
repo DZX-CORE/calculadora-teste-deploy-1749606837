@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora DZX-CORE - Deploy Real</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .calculadora {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .status {
+            background: #28a745;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .inputs {
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 15px;
+            margin: 8px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            text-align: center;
+        }
+        input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        .botoes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        button {
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #667eea;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        #resultado {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .rodape {
+            margin-top: 20px;
+            color: #666;
+            font-size: 13px;
+        }
+        @media (max-width: 480px) {
+            .calculadora { padding: 25px; }
+            h1 { font-size: 24px; }
+            .botoes { gap: 8px; }
+            button { padding: 15px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculadora">
+        <h1>Calculadora Web</h1>
+        <div class="status">DEPLOY REAL CONFIRMADO - APLICAÇÃO ONLINE</div>
+        
+        <div class="inputs">
+            <input type="number" id="numero1" placeholder="Digite o primeiro número" step="any">
+            <input type="number" id="numero2" placeholder="Digite o segundo número" step="any">
+        </div>
+        
+        <div class="botoes">
+            <button onclick="operar('+'))">+ Somar</button>
+            <button onclick="operar('-'))">- Subtrair</button>
+            <button onclick="operar('*'))">× Multiplicar</button>
+            <button onclick="operar('/'))">÷ Dividir</button>
+        </div>
+        
+        <div id="resultado">Digite os números e escolha uma operação</div>
+        
+        <div class="rodape">
+            Criado pelo orquestrador DZX-CORE<br>
+            Deploy automático funcionando
+        </div>
+    </div>
+    
+    <script>
+        function operar(operacao) {
+            const num1 = parseFloat(document.getElementById('numero1').value);
+            const num2 = parseFloat(document.getElementById('numero2').value);
+            
+            // Validar entradas
+            if (isNaN(num1) || isNaN(num2)) {
+                mostrarResultado('Por favor, digite números válidos nos dois campos');
+                return;
+            }
+            
+            let resultado;
+            let simbolo = operacao;
+            
+            // Realizar cálculo
+            switch(operacao) {
+                case '+':
+                    resultado = num1 + num2;
+                    break;
+                case '-':
+                    resultado = num1 - num2;
+                    break;
+                case '*':
+                    resultado = num1 * num2;
+                    simbolo = '×';
+                    break;
+                case '/':
+                    if (num2 === 0) {
+                        mostrarResultado('Erro: Não é possível dividir por zero');
+                        return;
+                    }
+                    resultado = num1 / num2;
+                    simbolo = '÷';
+                    break;
+                default:
+                    mostrarResultado('Operação inválida');
+                    return;
+            }
+            
+            // Exibir resultado formatado
+            const resultadoFormatado = resultado.toFixed(4).replace(/\.?0+$/, '');
+            mostrarResultado();
+        }
+        
+        function mostrarResultado(texto) {
+            document.getElementById('resultado').innerHTML = texto;
+        }
+        
+        // Confirmar que a aplicação carregou
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Calculadora DZX-CORE carregada com sucesso!');
+            
+            // Adicionar listeners para Enter
+            document.getElementById('numero1').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('numero2').focus();
+                }
+            });
+            
+            document.getElementById('numero2').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    operar('+'); // Operação padrão
+                }
+            });
+        });
+    </script>
+</body>
+</html>
